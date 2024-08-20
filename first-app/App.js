@@ -24,8 +24,11 @@ export default function App() {
     ]);
   }
 
-  function deleteGoalHandler() {
-    console.log('Item Deleted');
+  function deleteGoalHandler(id) {
+    console.log('Item Deleted id ' + id);
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== id);
+    });
   }
 
   return (
@@ -35,10 +38,9 @@ export default function App() {
         <FlatList
           data={goals}
           renderItem={(itemData) => {
-            console.log(itemData);
             return (
               <GoalItem
-                text={itemData.item.text}
+                item={itemData.item}
                 deleteGoalHandler={deleteGoalHandler}
               />
             );
