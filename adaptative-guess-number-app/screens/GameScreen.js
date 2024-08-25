@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, Alert, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import Title from '../components/ui/Title';
@@ -26,6 +26,10 @@ function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
+
+  const { width, height } = useWindowDimensions();
+
+  const paddingTopDistance = height < 380 ? 30 : 100;
 
   function nextGuessHandler(direction) {
     if (
@@ -67,7 +71,7 @@ function GameScreen({ userNumber, onGameOver }) {
   }, []);
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { paddingTop: paddingTopDistance }]}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
