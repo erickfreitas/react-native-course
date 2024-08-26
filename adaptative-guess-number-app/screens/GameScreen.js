@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, Alert, FlatList, useWindowDimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  FlatList,
+  useWindowDimensions,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import Title from '../components/ui/Title';
@@ -29,7 +35,7 @@ function GameScreen({ userNumber, onGameOver }) {
 
   const { width, height } = useWindowDimensions();
 
-  const paddingTopDistance = height < 380 ? 30 : 100;
+  const paddingTopDistance = height < 450 ? 30 : 100;
 
   function nextGuessHandler(direction) {
     if (
@@ -70,9 +76,8 @@ function GameScreen({ userNumber, onGameOver }) {
     maxBoundary = 100;
   }, []);
 
-  return (
-    <View style={[styles.screen, { paddingTop: paddingTopDistance }]}>
-      <Title>Opponent's Guess</Title>
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <InstructionText style={styles.InstructionText}>
@@ -99,6 +104,44 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  if (width > 500) {
+    content = (
+      <>
+        <InstructionText style={styles.InstructionText}>
+          Higher or Lower?
+        </InstructionText>
+        <View style={styles.buttonsContainerWide}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton
+              onPress={() => {
+                nextGuessHandler('lower');
+              }}
+            >
+              <Ionicons name='remove-circle-outline' size={24} color='white' />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton
+              onPress={() => {
+                nextGuessHandler('greater');
+              }}
+            >
+              <Ionicons name='add-circle-outline' size={24} color='white' />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    <View style={[styles.screen, { paddingTop: paddingTopDistance }]}>
+      <Title>Opponent's Guess</Title>
+      {content}
       <View style={styles.listContainer}>
         <FlatList
           data={guessRounds}
@@ -127,12 +170,16 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
   },
+  buttonsContainerWide: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   buttonContainer: {
     flex: 1,
   },
   listContainer: {
     flex: 1,
-    padding: 16,
+    padding: 8,
   },
 });
 
