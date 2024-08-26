@@ -1,10 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native';
+//import { useRoute } from '@react-navigation/native';
 
 import { MEALS } from '../data/dummy-data';
 
-function MealsOverviewScreen() {
+function MealsOverviewScreen({ route }) {
+
+  //Também é possível usar o useRoute para obter os parâmetros da rota.
+  //const route = useRoute();
+  //route.params;
+
+  const categoryId = route.params.categoryId;
+
   return <View style={styles.container}>
-    <Text>MealsOverviewScreen</Text>
+    <Text>MealsOverviewScreen - {categoryId}</Text>
   </View>
 }
 

@@ -5,13 +5,12 @@ import { CATEGORIES } from '../data/dummy-data';
 import CategoryGridTile from '../components/CategoryGridTile';
 
 function CaregoriesScreen({ navigation }) {
-
   function renderCategoryItem(itemData) {
     function pressHandler() {
       console.log(itemData.item.id);
-      navigation.navigate('MealsOverview');
+      navigation.navigate('MealsOverview', { categoryId: itemData.item.id });
     }
-  
+
     return (
       <CategoryGridTile
         title={itemData.item.title}
