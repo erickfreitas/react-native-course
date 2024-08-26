@@ -9,7 +9,7 @@ import {
 
 import Title from '../components/ui/Title';
 import PrimaryButton from '../components/ui/PrimaryButton';
-import Colors from '../constants/colors';
+import Colors from '../constants/colors.android';
 
 function GameOver({ roundsNumber, userNumber, onStartNewGame }) {
   const { width, height } = useWindowDimensions();
