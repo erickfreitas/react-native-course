@@ -1,5 +1,5 @@
 {
-  "name": "guess-number-app",
+  "name": "navigation-meals-app",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
@@ -9,10 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~51.0.31",
-    "expo-app-loading": "^2.1.1",
-    "expo-font": "~12.0.9",
-    "expo-linear-gradient": "~13.0.2",
+    "expo": "~51.0.28",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "0.74.5"
