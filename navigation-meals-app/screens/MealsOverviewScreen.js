@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { useLayoutEffect } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 //import { useRoute } from '@react-navigation/native';
 
 import MealItem from '../components/MealItem';
-import { MEALS } from '../data/dummy-data';
+import { MEALS, CATEGORIES } from '../data/dummy-data';
 
-function MealsOverviewScreen({ route }) {
+function MealsOverviewScreen({ route, navigation }) {
   //Também é possível usar o useRoute para obter os parâmetros da rota.
   //const route = useRoute();
   //route.params;
@@ -14,6 +15,11 @@ function MealsOverviewScreen({ route }) {
   const displayedMeals = MEALS.filter((meal) =>
     meal.categoryIds.includes(categoryId)
   );
+
+  useLayoutEffect(() => {
+    const category = CATEGORIES.find((category) => category.id === categoryId);
+    navigation.setOptions({ title: category.title });
+  }, [categoryId, navigation]);
 
   function renderMealItem(itemData) {
     return <MealItem {...itemData.item} />;
