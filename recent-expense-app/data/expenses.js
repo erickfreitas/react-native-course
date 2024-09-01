@@ -51,12 +51,12 @@ export const DUMMY_EXPENSES = [
     id: 'e9',
     description: 'A book',
     amount: 14.99,
-    date: new Date('2022-12-02'),
+    date: new Date('2024-08-27'),
   },
   {
     id: 'e10',
     description: 'Another book',
     amount: 18.59,
-    date: new Date('2022-12-16'),
+    date: new Date('2024-08-28'),
   },
 ];
