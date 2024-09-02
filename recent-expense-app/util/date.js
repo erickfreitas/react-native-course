@@ -6,6 +6,10 @@ export function getFormattedDate(date) {
   return `${day}/${month}/${year}`;
 }
 
+export function getUSFormattedDate(date) { 
+  return date.toISOString().slice(0, 10);
+}
+
 export function getDateMinusDays(date, days) {
   const newDate = new Date(date);
   newDate.setDate(newDate.getDate() - days);
