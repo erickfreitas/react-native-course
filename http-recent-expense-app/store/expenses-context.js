@@ -6,7 +6,8 @@ export const ExpensesContext = createContext({
   expenses: [],
   addExpense: ({ description, amount, date }) => {},
   deleteExpense: ({ id }) => {},
-  updateExpense: (id, { description, amount }) => {},
+  updateExpense: (id, { description, amount }) => { },
+  setExpenses: (expenses) => { },
 });
 
 function expensesReducer(state, action) {
@@ -32,6 +33,8 @@ function expensesReducer(state, action) {
       return updatedExpenses;
     case 'DELETE':
       return state.filter((expense) => expense.id !== action.payload.id);
+    case 'SET':
+      return action.payload
     default:
       return state;
   }
@@ -52,11 +55,16 @@ function ExpensesContextProvider({ children }) {
     dispatch({ type: 'UPDATE', payload: { id, data: expenseData } });
   }
 
+  function setExpenses(expenses) {
+    dispatch({ type: 'SET', payload: expenses });
+  }
+
   const value = {
     expenses: expensesState,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
+    setExpenses: setExpenses,
   };
 
   return (
