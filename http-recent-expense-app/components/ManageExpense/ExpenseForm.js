@@ -23,7 +23,6 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
-    console.log(inputIdentifier, enteredValue);
     setInputs((prevInputs) => {
       return {
         ...prevInputs,
