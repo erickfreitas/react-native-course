@@ -16,14 +16,13 @@ export async function createUser(email, password) {
 }
 
 export async function authenticate(email, password) {
-  debugger;
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
   const response = await axios.post(url, {
     email,
     password,
     returnSecureToken: true,
   });
-  
+
   console.log(response.data);
 
   return response.data;
