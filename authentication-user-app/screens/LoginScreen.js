@@ -1,7 +1,23 @@
+import { useState } from 'react';
+
 import AuthContent from '../components/Auth/AuthContent';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
+import { authenticate } from '../util/auth';
 
 function LoginScreen() {
-  return <AuthContent isLogin />;
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  async function loginHandler({ email, password }) {
+    setIsAuthenticating(true);
+    await authenticate(email, password);
+    setIsAuthenticating(false);
+  }
+
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Logging you in..." />;
+  }
+
+  return <AuthContent isLogin onAuthenticate={loginHandler} />;
 }
 
 export default LoginScreen;
