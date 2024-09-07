@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { authenticate } from "../util/auth";
 
 export const AuthContext = createContext({
   token: '',
