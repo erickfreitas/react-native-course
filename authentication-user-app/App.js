@@ -1,8 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 
 import { AuthContext } from './store/auth-context';
@@ -61,6 +62,7 @@ function AuthenticatedStack() {
 }
 
 function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
@@ -68,8 +70,14 @@ function Root() {
       if (token) {
         authCtx.authenticate(token);
       }
+
+      setIsTryingLogin(false);
     });
   }, []);
+
+  if (isTryingLogin) {
+    return <AppLoading />;
+  }
 
   return <Navigation />;
 }
