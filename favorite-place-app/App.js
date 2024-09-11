@@ -53,9 +53,6 @@ export default function App() {
           <Stack.Screen
             name='Map'
             component={Map}
-            options={{
-
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
