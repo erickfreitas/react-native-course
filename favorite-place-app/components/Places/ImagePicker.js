@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Button, View, Image, Text, StyleSheet } from 'react-native';
+import { Alert, View, Image, Text, StyleSheet } from 'react-native';
 import {
   launchCameraAsync,
   useCameraPermissions,
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary100,
     borderRadius: 4,
+    overflow: 'hidden',
   },
   image: {
     width: '100%',

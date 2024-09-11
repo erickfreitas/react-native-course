@@ -1,16 +1,23 @@
-import { View, StyleSheet, Alert } from 'react-native';
+import { useState } from 'react';
+import { View, StyleSheet, Alert, Text, Image } from 'react-native';
 import {
   getCurrentPositionAsync,
   useForegroundPermissions,
   PermissionStatus,
 } from 'expo-location';
+import { useNavigation } from '@react-navigation/native';
 
 import OutlinedButton from '../ui/OutlinedButton';
 import { Colors } from '../../constants/colors';
+import { getMapPreviewUrl } from '../../util/location';
 
 function LocationPicker() {
   const [locationPermissionInfo, requestPermission] =
     useForegroundPermissions();
+
+  const [location, setLocation] = useState();
+
+  const navigation = useNavigation();
 
   async function verifyPermissions() {
     if (locationPermissionInfo.status === PermissionStatus.UNDETERMINED) {
@@ -36,20 +43,39 @@ function LocationPicker() {
     if (hasPermission === false) {
       return;
     }
-    
+
     const location = await getCurrentPositionAsync({
       accuracy: 5,
       enableHighAccuracy: true,
     });
 
     console.log(location);
+    setLocation({
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
+    });
   }
 
-  function pickOnMapHandler() {}
+  function pickOnMapHandler() {
+    navigation.navigate('Map');
+  }
 
   return (
     <View>
-      <View style={styles.mapPreview}></View>
+      <View style={styles.mapPreview}>
+        {!location && <Text>No location set yet.</Text>}
+        {location && (
+          <Image
+            style={styles.image}
+            source={{
+              uri: getMapPreviewUrl(
+                location.lat,
+                location.lng
+              ),
+            }}
+          />
+        )}
+      </View>
       <View style={styles.actions}>
         <OutlinedButton icon='location' size={24} onPress={getLocationHandler}>
           Locate User
@@ -79,5 +105,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
