@@ -9,7 +9,7 @@ import {
 import OutlinedButton from '../ui/OutlinedButton';
 import { Colors } from '../../constants/colors';
 
-function ImagePicker() {
+function ImagePicker({ onTakeImage }) {
   const [image, setImage] = useState();
   const [cameraPermissionInfo, requestPermission] = useCameraPermissions();
 
@@ -46,6 +46,7 @@ function ImagePicker() {
     });
 
     setImage(capturedImage.assets[0].uri);
+    onTakeImage(capturedImage.assets[0].uri);
     console.log(image);
   }
 

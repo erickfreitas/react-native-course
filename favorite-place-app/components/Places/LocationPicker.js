@@ -15,7 +15,7 @@ import OutlinedButton from '../ui/OutlinedButton';
 import { Colors } from '../../constants/colors';
 import { getMapPreviewUrl } from '../../util/location';
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const [locationPermissionInfo, requestPermission] =
     useForegroundPermissions();
 
@@ -43,6 +43,10 @@ function LocationPicker() {
       }
     }
   }, [isFocused, route]);
+
+  useEffect(() => {
+    onPickLocation(location);
+  }, [location, onPickLocation]);
 
   async function verifyPermissions() {
     if (locationPermissionInfo.status === PermissionStatus.UNDETERMINED) {
@@ -74,11 +78,13 @@ function LocationPicker() {
       enableHighAccuracy: true,
     });
 
-    console.log(location);
-    setLocation({
+    const pickedLocation = {
       lat: location.coords.latitude,
       lng: location.coords.longitude,
-    });
+    };
+
+    console.log(location);
+    setLocation(pickedLocation);
   }
 
   function pickOnMapHandler() {
