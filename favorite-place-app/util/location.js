@@ -11,12 +11,11 @@ export async function getAddress(lat, lng) {
 
   const response = await fetch(addressUrl);
 
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error('Could not fetch address!');
   }
 
   const data = await response.json();
   const address = data.results[0].formatted_address;
-  console.log(address);
   return address;
 }
