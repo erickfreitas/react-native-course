@@ -18,7 +18,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,6 +33,17 @@
           "cameraPermission": "The app needs access to your camera in order to take pictures."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8b364eab-996c-48e0-83f2-51d119636ddd"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8b364eab-996c-48e0-83f2-51d119636ddd"
+    }
   }
 }
