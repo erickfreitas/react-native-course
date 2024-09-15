@@ -7,10 +7,11 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import AllPlaces from './screens/AllPlaces';
 import AddPlaces from './screens/AddPlaces';
+import PlaceDetails from './screens/PlaceDetails';
 import Map from './screens/Map';
 import IconButtons from './components/ui/IconButtons';
 import { Colors } from './constants/colors';
-import { init } from './util/databaseTeste';
+import { init } from './util/database';
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -69,6 +70,7 @@ export default function App() {
             }}
           />
           <Stack.Screen name='Map' component={Map} />
+          <Stack.Screen name='PlaceDetails' component={PlaceDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

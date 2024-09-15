@@ -1,6 +1,6 @@
 import PlaceForm from "../components/Places/PlaceForm";
 
-import { insertPlace } from "../util/databaseTeste";
+import { insertPlace } from "../util/database";
 
 function AddPlaces({ navigation }) {
 

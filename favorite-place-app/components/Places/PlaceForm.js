@@ -6,22 +6,26 @@ import { Colors } from '../../constants/colors';
 import ImagePicker from './ImagePicker';
 import LocationPicker from './LocationPicker';
 import Button from '../ui/Button';
-import Place from '../../models/place';
+import { Place } from '../../models/place';
 
 function PlaceForm({ onCreatePlace }) {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [selectedImage, setSelectedImage] = useState();
   const [pickedLocation, setPickedLocation] = useState();
+  const [cleanLocation, setCleanLocation] = useState(true);
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    if (isFocused) {
-      setEnteredTitle('');
-      setSelectedImage();
-      setPickedLocation();
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     setEnteredTitle('');
+  //     setSelectedImage();
+
+  //     if (cleanLocation) {
+  //       setPickedLocation();
+  //     }
+  //   }
+  // }, [isFocused]);
 
   function changeTitleHandler(enteredText) {
     setEnteredTitle(enteredText);
@@ -33,13 +37,15 @@ function PlaceForm({ onCreatePlace }) {
 
   const pickLocationHandler = useCallback((location) => {
     setPickedLocation(location);
+    setCleanLocation(false);
   }, []);
 
   function savePlaceHandler() {
     const placeData = new Place(
       enteredTitle,
       selectedImage,
-      pickedLocation
+      pickedLocation,
+      1
     );
 
     onCreatePlace(placeData);
