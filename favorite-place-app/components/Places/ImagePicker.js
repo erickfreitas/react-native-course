@@ -47,7 +47,7 @@ function ImagePicker({ onTakeImage }) {
 
     setImage(capturedImage.assets[0].uri);
     onTakeImage(capturedImage.assets[0].uri);
-    console.log(image);
+    //console.log(image);
   }
 
   return (

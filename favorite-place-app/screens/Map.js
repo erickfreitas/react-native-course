@@ -26,9 +26,7 @@ function Map({ navigation }) {
       return;
     }
 
-    console.log(selectedLocation);
     navigation.navigate('AddPlaces', { pickedLocation: selectedLocation });
-
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {

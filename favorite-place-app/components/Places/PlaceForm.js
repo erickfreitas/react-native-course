@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { View, Text, ScrollView, TextInput, StyleSheet } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Colors } from '../../constants/colors';
 import ImagePicker from './ImagePicker';
@@ -11,6 +12,16 @@ function PlaceForm({ onCreatePlace }) {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [selectedImage, setSelectedImage] = useState();
   const [pickedLocation, setPickedLocation] = useState();
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setEnteredTitle('');
+      setSelectedImage();
+      setPickedLocation();
+    }
+  }, [isFocused]);
 
   function changeTitleHandler(enteredText) {
     setEnteredTitle(enteredText);

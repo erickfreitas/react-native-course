@@ -2,14 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useEffect, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+
 import AllPlaces from './screens/AllPlaces';
 import AddPlaces from './screens/AddPlaces';
 import Map from './screens/Map';
 import IconButtons from './components/ui/IconButtons';
 import { Colors } from './constants/colors';
-import { useEffect, useState } from 'react';
-import { init } from './util/database';
-import * as SplashScreen from 'expo-splash-screen';
+import { init } from './util/databaseTeste';
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();

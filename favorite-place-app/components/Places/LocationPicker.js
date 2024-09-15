@@ -67,6 +67,7 @@ function LocationPicker({ onPickLocation }) {
         'Insufficient permissions!',
         'You need to grant location permissions to use this app.'
       );
+      const permissionResponse = await requestPermission();
       return false;
     }
 
@@ -90,7 +91,7 @@ function LocationPicker({ onPickLocation }) {
       lng: location.coords.longitude,
     };
 
-    console.log(location);
+    //console.log(location);
     setLocation(pickedLocation);
   }
 
