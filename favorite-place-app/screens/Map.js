@@ -1,19 +1,38 @@
-import { useLayoutEffect, useState, useCallback } from 'react';
+import { useLayoutEffect, useState, useCallback, useEffect } from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import IconButtons from '../components/ui/IconButtons';
 
-function Map({ navigation }) {
+function Map({ navigation, route }) {
   const [selectedLocation, setSelectedLocation] = useState();
 
-  const region = {
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+  const initialLocation = route.params && {
+    lat: route.params.initialLat,
+    lng: route.params.initialLng
   };
 
+  const region = {
+    latitude: initialLocation?.lat || 37.78825,
+    longitude: initialLocation?.lng || -122.4324,
+    latitudeDelta: 0.007,
+    longitudeDelta: 0.007,
+  };
+
+  useEffect(() => {
+    if (initialLocation) {
+      setSelectedLocation({
+        lat: initialLocation.lat,
+        lng: initialLocation.lng,
+      });
+    }
+  }, [setSelectedLocation]);
+
   function selectLocationHandler(event) {
+
+    if (initialLocation) {
+      return;
+    }
+
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
 
@@ -30,17 +49,19 @@ function Map({ navigation }) {
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: ({ tintColor }) => (
-        <IconButtons
-          icon='save'
-          size={24}
-          color={tintColor}
-          onPress={savePickedLocationHandler}
-        />
-      ),
-    });
-  }, [navigation, savePickedLocationHandler]);
+    if (!initialLocation) {
+      navigation.setOptions({
+        headerRight: ({ tintColor }) => (
+          <IconButtons
+            icon='save'
+            size={24}
+            color={tintColor}
+            onPress={savePickedLocationHandler}
+          />
+        ),
+      });
+    }
+  }, [navigation, savePickedLocationHandler, initialLocation]);
 
   return (
     <MapView
