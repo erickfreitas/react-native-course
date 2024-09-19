@@ -14,17 +14,24 @@
     },
     "ios": {
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.erickfreitasbezerra.navigationmealsapp"
     },
     "android": {
       "adaptiveIcon": {
         "versionCode": 1,
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.erickfreitasbezerra.navigationmealsapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5ecc39e8-e4d6-4c17-bcc0-ee76e51635f1"
+      }
     }
   }
 }
