@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, Alert, Linking } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { useEffect } from 'react';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -16,6 +17,32 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  useEffect(() => {
+    //Executa quando uma notificação é recebida
+    const subscription1 = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log('Notification received');
+        const data = notification.request.content.data;
+        console.log(data);
+      }
+    );
+
+    //Executa quando uma notificação é respondida (clickada pelo usuário)
+    const subscription2 = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log('Notification response received');
+
+        const data = response.notification.request.content.data;
+        console.log(data);
+      }
+    );
+
+    return () => {
+      subscription1.remove();
+      subscription2.remove();
+    };
+  }, []);
+
   const permissionsHandler = async () => {
     const settings = await Notifications.getPermissionsAsync();
 
@@ -64,7 +91,7 @@ export default function App() {
         },
       },
       trigger: {
-        seconds: 5,
+        seconds: 1,
       },
     });
   }
