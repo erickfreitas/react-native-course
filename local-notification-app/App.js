@@ -1,5 +1,14 @@
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, Alert, Linking } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Linking,
+  Platform,
+} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useEffect } from 'react';
 
@@ -17,6 +26,47 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  useEffect(() => {
+    async function configureNotifications() {
+      const { status } = await Notifications.getPermissionsAsync();
+
+      let finalStatus = status;
+      if (finalStatus !== 'granted') {
+        await Notifications.requestPermissionsAsync();
+        const { status } = await Notifications.getPermissionsAsync();
+        finalStatus = status;
+
+        if (finalStatus !== 'granted') {
+          Alert.alert(
+            'Permission required',
+            'Push notifications are required for this app to work properly'
+          );
+          return;
+        }
+      }
+
+      //token do dispositivo, utilizado para mandar notificações para 
+      //o dispositivo especifico
+      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+        //esse id é gerado após rodar o comando npx eas build:configure
+        //fica no arquivo app.json e também é possível pegar no site da expo
+        projectId: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
+      });
+      console.log('token:', pushTokenData);
+
+      if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.DEFAULT,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        });
+      }
+    }
+
+    configureNotifications();
+  }, []);
+
   useEffect(() => {
     //Executa quando uma notificação é recebida
     const subscription1 = Notifications.addNotificationReceivedListener(
@@ -96,14 +146,26 @@ export default function App() {
     });
   }
 
+  function sendPushNotificationHandler() {
+    axios.post('https://exp.host/--/api/v2/push/send', {
+      to: 'ExponentPushToken[XXXXXXXXXXXXXXX]',
+      title: 'Hello from Expo!',
+      body: 'This is a test notification.',
+      data: {
+        userName: 'Erick',
+      },
+    });
+  }
+
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <Button title='Permissions' onPress={permissionsHandler} />
       <Button
         onPress={scheduleNotificationHandler}
-        title='Schedule Notification'
+        title='Local Notification'
       />
+      <Button onPress={sendPushNotificationHandler} title='Push Notification' />
       <StatusBar style='auto' />
     </View>
   );

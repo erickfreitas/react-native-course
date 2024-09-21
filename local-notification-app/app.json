@@ -36,6 +36,11 @@
           ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "'XXXXXXXXXXXXXXXX"
+      }
+    }
   }
 }
